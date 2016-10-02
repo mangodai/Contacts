@@ -1,22 +1,19 @@
 package Edu.Java.BlueDot_2.tools;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
 public class FileManager {
 	private static String fileName = "contacts.txt";
 	private static File f = new File(fileName);
-	private static FileInputStream fis = null;
+//	private static FileInputStream fis = null;
 	private static FileOutputStream fos = null;
 	private static Connection conn = null;
 
@@ -31,19 +28,19 @@ public class FileManager {
 		conn = DriverManager.getConnection(
 				"jdbc:mysql://115.159.81.77:3306/cost_management", "root",
 				"qwe123QWE123");
-		// Statement s = con.createStatement();
-		// ResultSet rs = s.executeQuery("select * from contacts");
+//		 Statement s = conn.createStatement();
+//		 ResultSet rs = s.executeQuery("select * from contacts");
 
 		// Connection con =DriverManager.getConnection(
 		// "jdbc:mysql://127.0.0.1:3306/world",
 		// "root", "qwe123QWE123");
 		// ResultSet rs = s.executeQuery("select * from city");
 
-		// while(rs.next()){
-		// System.out.println(rs.getString("name"+"   "+rs.getString("telnum")
-		// ));
-		// System.out.println(rs.getString("name"));
-		// }
+//		 while(rs.next()){
+//		 System.out.println(rs.getString("name"+"   "+rs.getString("telnum")
+//		 ));
+//		 System.out.println(rs.getString("name"));
+//		 }
 		if (conn != null) {
 			return conn;
 		} else {
@@ -53,9 +50,9 @@ public class FileManager {
 		return null;
 	}
 
-	/*
-	 * public static void main(String args[]){ initi(); }
-	 */
+	
+	 public static void main(String args[]) throws Exception{ initi(); }
+	 
 	private static void close(Connection conn) {
 		try {
 			conn.close();

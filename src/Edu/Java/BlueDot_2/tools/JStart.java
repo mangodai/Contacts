@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import Edu.Java.BlueDot_2.Contacts.ContactsMain;
 /**
  * 
  * @author MangoDai 2016年10月2日下午3:24:11
