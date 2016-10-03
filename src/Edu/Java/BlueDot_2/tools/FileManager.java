@@ -6,15 +6,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import Edu.Java.BlueDot_2.Contacts.User;
+
 public class FileManager {
-	private static String fileName = "contacts.txt";
-	private static File f = new File(fileName);
+//	private static String fileName = "contacts.txt";
+	private static final String insertSql = "INSERT INTO contacts(name,telnum) values (?,?)";
+	private static final String updataSql = "UPDATA contacts(name,telnum) values (?,?)";
+//	private static File f = new File(fileName);
 //	private static FileInputStream fis = null;
-	private static FileOutputStream fos = null;
+//	private static FileOutputStream fos = null;
 	private static Connection conn = null;
 
 	private static Connection initi() throws Exception {
@@ -51,7 +59,7 @@ public class FileManager {
 	}
 
 	
-	 public static void main(String args[]) throws Exception{ initi(); }
+//	 public static void main(String args[]) throws Exception{ getAll(); }
 	 
 	private static void close(Connection conn) {
 		try {
@@ -62,7 +70,7 @@ public class FileManager {
 		}
 	}
 
-	public static Object[][] getMassage() {
+	public static ArrayList<User> getAll() {
 		/*
 		 * try { //1.0 file txt fis = new FileInputStream(f); } catch
 		 * (FileNotFoundException e) { // TODO Auto-generated catch block
@@ -70,30 +78,86 @@ public class FileManager {
 		 * (IOException e) { // TODO Auto-generated catch block
 		 * e.printStackTrace(); } }
 		 */
+		ArrayList<User> list = new ArrayList<User>();
+		User u = null;
 		try {
 			conn = initi();
+			 Statement s = conn.createStatement();
+			 ResultSet rs = s.executeQuery("select * from contacts");
+			 while(rs.next()){
+				 u =new User();
+				 u.setName(rs.getString("name"));
+				 u.setTelnum(rs.getInt("telnum"));
+				 System.out.println( rs.getString("name"));
+				 System.out.println( rs.getInt("telnum"));
+				 list.add(u);
+			 }
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(conn);
 		}
-		return null;
+		return list;
 	}
 
-	private static boolean addMassege(String name, int number) {
-		try {
+	public static boolean addUser(User u) {
+/*		try {
 			fos = new FileOutputStream(f);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
 				fos.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}*/
+		try {
+			conn = initi();
+//			 Statement s = conn.createStatement();
+			PreparedStatement prepareS= conn.prepareStatement(insertSql);
+			prepareS.setString(1, u.getName());
+			prepareS.setInt(2, u.getTelnum());
+			if(prepareS.execute()){
+				JOptionPane.showMessageDialog(null,"信息新增成功");
+				return true;
+			}else{
+				JOptionPane.showConfirmDialog(null, "信息新增失败","信息",JOptionPane.ERROR_MESSAGE);			
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(conn);
+		}
+		return true;
+	}
+	
+	public static boolean removeUser(User u){
+		return true;
+	}
+	
+	public static boolean updataUser(User u){
+		try {
+			conn = initi();
+//			 Statement s = conn.createStatement();
+			PreparedStatement prepareS= conn.prepareStatement(updataSql);
+			prepareS.setString(1, u.getName());
+			prepareS.setInt(2, u.getTelnum());
+			if(prepareS.execute()){
+				JOptionPane.showMessageDialog(null,"信息新增成功");
+				return true;
+			}else{
+				JOptionPane.showConfirmDialog(null, "信息新增失败","信息",JOptionPane.ERROR_MESSAGE);			
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(conn);
 		}
 		return true;
 	}
