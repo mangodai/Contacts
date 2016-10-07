@@ -4,6 +4,7 @@ public class User {
 	private String name = null;
 	private int telnum = 0;
 	private int user_id = 0;
+	
 	public int getUser_id() {
 		return user_id;
 	}
@@ -23,6 +24,12 @@ public class User {
 		return name;
 	}
 
+	
+	@Override
+	public String toString() {
+		return "User [name=" + name + ", telnum=" + telnum + ", user_id="
+				+ user_id + "]";
+	}
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -31,6 +38,12 @@ public class User {
 		return telnum;
 	}
 
+	public User(String name, int telnum, int user_id) {
+		super();
+		this.name = name;
+		this.telnum = telnum;
+		this.user_id = user_id;
+	}
 	public void setTelnum(int telnum) {
 		this.telnum = telnum;
 	}

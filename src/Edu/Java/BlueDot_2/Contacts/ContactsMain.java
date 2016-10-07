@@ -20,6 +20,7 @@ public class ContactsMain extends JFrame{
 		super();
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(300, 500);
+		this.setResizable(false);
 		this.setTitle(string);
 		this.setLocationRelativeTo(null);
 		addMenu();
